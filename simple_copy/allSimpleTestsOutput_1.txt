@@ -1,0 +1,162 @@
+
+1-1 completed
+File source: C:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F1, File destination: C:/CAPSTONE_PROJECT/output
+Total time: 120 seconds 
+
+
+
+4-2 completed
+File source: D:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F1, File destination: D:/CAPSTONE_PROJECT/output
+Total time: 128 seconds 
+
+
+
+7-3 completed
+File source: E:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F1, File destination: E:/CAPSTONE_PROJECT/output
+Total time: 114 seconds 
+
+
+
+4-3 completed
+File source: D:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F1, File destination: E:/CAPSTONE_PROJECT/output
+Total time: 118 seconds 
+
+
+
+7-2 completed
+File source: E:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F1, File destination: D:/CAPSTONE_PROJECT/output
+Total time: 119 seconds 
+
+
+
+1-2 completed
+File source: C:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F1, File destination: D:/CAPSTONE_PROJECT/output
+Total time: 119 seconds 
+
+
+
+1-3 completed
+File source: C:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F1, File destination: E:/CAPSTONE_PROJECT/output
+Total time: 118 seconds 
+
+
+
+4-1 completed
+File source: D:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F1, File destination: C:/CAPSTONE_PROJECT/output
+Total time: 119 seconds 
+
+
+
+7-1 completed
+File source: E:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F1, File destination: C:/CAPSTONE_PROJECT/output
+Total time: 119 seconds 
+
+
+
+2-1 completed
+File source: C:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F2, File destination: C:/CAPSTONE_PROJECT/output
+Total time: 391 seconds 
+
+
+
+5-2 completed
+File source: D:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F2, File destination: D:/CAPSTONE_PROJECT/output
+Total time: 514 seconds 
+
+
+
+8-3 completed
+File source: E:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F2, File destination: E:/CAPSTONE_PROJECT/output
+Total time: 547 seconds 
+
+
+
+5-3 completed
+File source: D:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F2, File destination: E:/CAPSTONE_PROJECT/output
+Total time: 338 seconds 
+
+
+
+8-2 completed
+File source: E:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F2, File destination: D:/CAPSTONE_PROJECT/output
+Total time: 339 seconds 
+
+
+
+2-2 completed
+File source: C:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F2, File destination: D:/CAPSTONE_PROJECT/output
+Total time: 365 seconds 
+
+
+
+2-3 completed
+File source: C:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F2, File destination: E:/CAPSTONE_PROJECT/output
+Total time: 366 seconds 
+
+
+
+5-1 completed
+File source: D:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F2, File destination: C:/CAPSTONE_PROJECT/output
+Total time: 357 seconds 
+
+
+
+8-1 completed
+File source: E:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F2, File destination: C:/CAPSTONE_PROJECT/output
+Total time: 356 seconds 
+
+
+
+3-1 completed
+File source: C:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F3, File destination: C:/CAPSTONE_PROJECT/output
+Total time: 50 seconds 
+
+
+
+6-2 completed
+File source: D:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F3, File destination: D:/CAPSTONE_PROJECT/output
+Total time: 45 seconds 
+
+
+
+9-3 completed
+File source: E:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F3, File destination: E:/CAPSTONE_PROJECT/output
+Total time: 49 seconds 
+
+
+
+6-3 completed
+File source: D:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F3, File destination: E:/CAPSTONE_PROJECT/output
+Total time: 32 seconds 
+
+
+
+9-2 completed
+File source: E:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F3, File destination: D:/CAPSTONE_PROJECT/output
+Total time: 31 seconds 
+
+
+
+3-2 completed
+File source: C:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F3, File destination: D:/CAPSTONE_PROJECT/output
+Total time: 33 seconds 
+
+
+
+3-3 completed
+File source: C:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F3, File destination: E:/CAPSTONE_PROJECT/output
+Total time: 32 seconds 
+
+
+
+6-1 completed
+File source: D:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F3, File destination: C:/CAPSTONE_PROJECT/output
+Total time: 35 seconds 
+
+
+
+9-1 completed
+File source: E:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F3, File destination: C:/CAPSTONE_PROJECT/output
+Total time: 35 seconds 
+
+
