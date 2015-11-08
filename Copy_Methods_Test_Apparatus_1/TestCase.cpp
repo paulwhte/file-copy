@@ -6,14 +6,23 @@
 using std::cerr;
 using std::stringstream;
 
-const char *copyMethodStrings[] = {"openCopy","fopenCopy","streamCopy"};
+//const char *copyMethodStrings[] = {"openCopy","fopenCopy","streamCopy"};
 
-TestCase::TestCase(FilePath& _origin, FilePath& _destination, FilePath& _dataset, string _copyMethod, int _numThreads, int _bufferSize){
+TestCase::TestCase(){
+
+}
+
+TestCase::~TestCase(){
+
+}
+
+TestCase::TestCase(FilePath& _origin, FilePath& _destination, FilePath& _dataset, string _copyMethod, string _strategy, int _numThreads, int _bufferSize){
     //Construct test case, set member variables
     this->origin = _origin;
     this->destination = _destination;
     this->dataset = _dataset;
     this->copyMethod = _copyMethod;
+    this->strategy = _strategy;
     this->numThreads = _numThreads;
     this->bufferSize = _bufferSize;
     this->totalTime = -1;
@@ -100,7 +109,7 @@ string TestCase::printReport(){
     FilePath testPath3;
     testPath3.setPath("C:/CAPSTONE_PROJECT/");
     string thisCopyMethod(copyMethodStrings[OPENCOPY]);
-    TestCase *fakeTest = new TestCase(testPath1,testPath2,testPath3, thisCopyMethod, 1, 1024);
+    //TestCase *fakeTest = new TestCase(testPath1,testPath2,testPath3, thisCopyMethod, 1, 1024);
 
     //Fake the copy
     if(fakeTest->beginCopy())

@@ -40,6 +40,24 @@ void MainCopyTest::beginTest(){
                 for(std::vector<string>::size_type i4 = 0; i4 != this->strategyList.size(); i4++) {
                     for(std::vector<int>::size_type i5 = 0; i5 != this->threadNum.size(); i5++) {
                         for(std::vector<int>::size_type i6 = 0; i6 != this->bufferSize.size(); i6++) {
+                            //Set necessary variables
+                            FilePath dataset = this->datasets[i1];
+                            FilePath origin, destination;
+                            origin.setPath(std::get<0>(this->sourceDests[i2]));
+                            destination.setPath(std::get<1>(this->sourceDests[i2]));
+                            string method = this->copyMethodList[i3];
+                            string strategy = this->strategyList[i4];
+                            //if strategy is native, no threading
+                            int numThreads;
+                            if(strategy != "native")
+                            {
+                                numThreads = this->threadNum[i5];
+                            } else { numThreads = 0; }
+                            //all copying will be buffered
+                            int bufSize = this->bufferSize[i6];
+
+                            //Create instance of TestCase
+                            //TestCase *newTestCase = new TestCase(origin, destination, dataset, method, strategy, numThreads, bufSize);
 
                             cout << "Test " << testCount << endl;
                             cout << "    Dataset: " << this->datasets[i1].getPath() << endl;

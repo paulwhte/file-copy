@@ -10,12 +10,13 @@ class TestCase {
     FilePath destination;
     FilePath dataset;
     string copyMethod;
+    string strategy;
     int numThreads;
     int bufferSize;
     double totalTime;
 
 public:
-    TestCase(FilePath& _origin, FilePath& _destination, FilePath& _dataset, string _copyMethod, int _numThreads, int _bufferSize);
+    TestCase(FilePath& _origin, FilePath& _destination, FilePath& _dataset, string _copyMethod, string _strategy, int _numThreads, int _bufferSize);
 
     bool beginCopy(); // will return 1 if success, 0 if error
 
