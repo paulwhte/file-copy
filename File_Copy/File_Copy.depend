@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1336441848 source:e:\capstone_project\file-copy\tinythread++-1.1\source\tinythread.cpp
+	<exception>
+	"tinythread.h"
+	<unistd.h>
+	<map>
+	<process.h>
+
+1336441848 e:\capstone_project\file-copy\tinythread++-1.1\source\tinythread.h
+	<windows.h>
+	<pthread.h>
+	<signal.h>
+	<sched.h>
+	<unistd.h>
+	<ostream>
+
