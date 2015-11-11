@@ -302,7 +302,7 @@ thread::id this_thread::get_id()
 
 }
 
-/*int main()
+int main()
 {
     return 0;
-}*/
+}

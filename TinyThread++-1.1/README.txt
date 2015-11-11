@@ -22,6 +22,8 @@ See the documentation in the doc/html directory for more information.
 
 
 Using TinyThread++
+
+
 ------------------
 
 To use TinyThread++ in your own project, just add tinythread.cpp and
@@ -34,6 +36,8 @@ using namespace tthread;
 If you wish to use the fast_mutex class, inlude fast_mutex.h:
 
 #include <fast_mutex.h>
+
+
 
 
 Building the test programs
