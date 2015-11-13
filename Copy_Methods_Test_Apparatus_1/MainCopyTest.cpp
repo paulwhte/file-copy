@@ -1,12 +1,15 @@
 #include <vector>
 #include <tuple>
 #include <iostream>
+#include <fstream>
 
-#include "TestCase.h"
+#include "TestCase.cpp"
 
 using std::vector;
+using std::string;
 using std::tuple;
 using std::cout;
+using std::ofstream;
 
 class MainCopyTest {
 public:
@@ -16,6 +19,8 @@ public:
     vector <string> strategyList;
     vector <int> threadNum;
     vector <int> bufferSize;
+
+    string reportString;
 
     MainCopyTest();
     ~MainCopyTest();
@@ -57,8 +62,27 @@ void MainCopyTest::beginTest(){
                             int bufSize = this->bufferSize[i6];
 
                             //Create instance of TestCase
-                            //TestCase *newTestCase = new TestCase(origin, destination, dataset, method, strategy, numThreads, bufSize);
+                            //TestCase(FilePath& _origin, FilePath& _destination, FilePath& _dataset, string _copyMethod, string _strategy, int _Max_Threads, int _bufferSize);
+                            TestCase *newTestCase = new TestCase(origin, destination, dataset, method, strategy, numThreads, bufSize);
+                            //Now start this test
+                            if(newTestCase->beginCopy())
+                            {
+                                //Successful TestCase, continue
+                                cout << "Successful copy" << endl << endl;
+                                //Save the string stream of this TestCase
+                                this->reportString = this->reportString + newTestCase->printReport();
+                            }
+                            else
+                            {
+                                //There was an error
+                                cerr << "There was an error" << endl << endl;
+                            }
 
+                            //Call destructor
+                            newTestCase->~TestCase();
+
+
+                            /*
                             cout << "Test " << testCount << endl;
                             cout << "    Dataset: " << this->datasets[i1].getPath() << endl;
                             cout << "    Source: " << std::get<0>(this->sourceDests[i2]) << ", Destination: " << std::get<1>(this->sourceDests[i2]) << endl;
@@ -67,6 +91,7 @@ void MainCopyTest::beginTest(){
                             cout << "    Number of threads: " << this->threadNum[i5] << endl;
                             cout << "    Buffer size: " << this->bufferSize[i6] << endl;
                             cout << endl;
+                            */
                             testCount++;
 
                         }
@@ -76,7 +101,13 @@ void MainCopyTest::beginTest(){
         }
 
         //
-    }
+    } //End outermost for loop
+
+    //Output the string to file
+    ofstream outputFile;
+    outputFile.open("output.txt");
+    outputFile << this->reportString;
+    outputFile.close();
 }
 
 int main(){
@@ -112,7 +143,7 @@ int main(){
 
     //Populate strategyList
     mainCopyTest->strategyList.push_back("native");
-    //mainCopyTest->strategy.push_back("threaded");
+    mainCopyTest->strategyList.push_back("threaded");
     //mainCopyTest->strategy.push_back("calcThreaded");
     //mainCopyTest->strategy.push_back("orderFiles");
 

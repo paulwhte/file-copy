@@ -11,18 +11,23 @@ class TestCase {
     FilePath dataset;
     string copyMethod;
     string strategy;
-    int numThreads;
+    int Max_Threads;
     int bufferSize;
     double totalTime;
 
 public:
-    TestCase(FilePath& _origin, FilePath& _destination, FilePath& _dataset, string _copyMethod, string _strategy, int _numThreads, int _bufferSize);
+    TestCase();
+    ~TestCase();
+    TestCase(FilePath& _origin, FilePath& _destination, FilePath& _dataset, string _copyMethod, string _strategy, int _Max_Threads, int _bufferSize);
 
     bool beginCopy(); // will return 1 if success, 0 if error
 
     void doOpenCopy();
     void doFopenCopy();
     void doStreamCopy();
+    void doThreadedOpenCopy();
+    void doThreadedFopenCopy();
+    void doThreadedStreamCopy();
 
     void clearDirectory(FilePath directoryToClear);
 
