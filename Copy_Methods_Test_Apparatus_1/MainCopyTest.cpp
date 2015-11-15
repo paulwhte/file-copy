@@ -58,7 +58,7 @@ void MainCopyTest::beginTest(){
                             {
                                 numThreads = this->threadNum[i5];
                             } else { numThreads = 0; }
-                            //all copying will be buffered
+                            //all copying will be buffered","
                             int bufSize = this->bufferSize[i6];
 
                             //Create instance of TestCase

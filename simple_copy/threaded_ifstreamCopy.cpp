@@ -8,11 +8,16 @@
 #include <dirent.h>
 #include <iterator>
 #include <windows.h>
+#include "tinythread.cpp"
 //#include <boost/thread.hpp>
+
+using namespace tthread;
 
 //http://stackoverflow.com/questions/11007494/how-to-delete-all-files-in-a-folder-but-not-delete-the-folder-c-linux
 
 using namespace std;
+
+int numActiveThreads = 0;
 
 
 void wipeDirectory(string directory)
@@ -37,21 +42,18 @@ struct threadParams
     string destFilePath;
 };
 
-DWORD WINAPI copyThread(void* param)
+void copyThread(void *copyArgs)
 {
-    threadParams *tparams = (threadParams*)param;
+    threadParams *paramPtr = static_cast<threadParams*>(copyArgs);
+    cout << "I am a thread, Source: " << paramPtr->thisFilePath << ", Dest: " << paramPtr->destFilePath << endl;
 
-    string thisFilePath = tparams->thisFilePath;
-    string destFilePath = tparams->destFilePath;
-
-    std::ifstream  src(thisFilePath, std::ios::binary);
-
-    std::ofstream  dst(destFilePath,   std::ios::binary);
-
-    return 0;
+    if(numActiveThreads > 0)
+    {
+        numActiveThreads--;
+    }
 }
 
-string doCopy(int dataset, int destination)
+string doCopy(int dataset, int destination, int Max_Threads)
 {
     string inputFilename;
     string inputDirectory;
@@ -104,31 +106,27 @@ string doCopy(int dataset, int destination)
     cout << endl << "Begin copy..." << endl << endl;
     string line;
     std:ifstream infile(inputFilename);
+    //Run through each file
     while(std::getline(infile, line))
     {
-        threadParams *tparams = new threadParams;
-
-
+        while(numActiveThreads >= Max_Threads)
+        {
+            Sleep(50);
+        }
         string thisFile = inputDirectory + "/" + line;
         //std::ifstream  src(thisFilePath, std::ios::binary);
         //output file will be outputLocation + line
         string destFile = outputLocation + "/" + line;
         //std::ofstream  dst(destFilePath,   std::ios::binary);
+        threadParams par;
+        par.destFilePath = destFile;
+        par.thisFilePath = thisFile;
+        void *parV = &par;
 
-        tparams->thisFilePath = thisFile;
-        tparams->destFilePath = destFile;
-
-        //Create thread with tparams parameter
-        DWORD ThreadID;
-        CreateThread(
-                     NULL,
-                     0,
-                     copyThread,
-                     tparams,
-                     0,
-                     NULL
-                     );
-
+        thread t(copyThread,parV);
+        numActiveThreads++;
+        //t.join();
+        t.detach();
         //dst << src.rdbuf();
     }
 
@@ -218,10 +216,14 @@ void runManualMode()
         //return 0;
     }
 
+    int Max_Threads;
+    cout << "Choose number of threads: " << endl;
+    cin >> Max_Threads;
+
     //cout << "You have chosen: " << outputLocationArray[outputFileNum-1] << endl;
     //outputLocation = outputLocationArray[outputFileNum-1];
 
-    string output = doCopy(inputFileNum, outputFileNum);
+    string output = doCopy(inputFileNum, outputFileNum, Max_Threads);
 
     cout << output;
 } //End runManualMode
@@ -238,7 +240,7 @@ void runAutoMode()
         for(int i = 0; i < 3; i++)
         {
             //Do the copy and get the output string
-            copyResult = doCopy(a,b);
+            copyResult = doCopy(a,b,0);
             //Push it into the output vector
             copyResultsArray.push_back(copyResult);
         }
