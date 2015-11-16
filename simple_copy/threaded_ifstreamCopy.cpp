@@ -8,6 +8,7 @@
 #include <dirent.h>
 #include <iterator>
 #include <windows.h>
+#include <list>
 #include "tinythread.cpp"
 //#include <boost/thread.hpp>
 
@@ -58,6 +59,8 @@ string doCopy(int dataset, int destination, int Max_Threads)
     string inputFilename;
     string inputDirectory;
     string outputLocation;
+
+    list<thread *> threadList;
 
     string inputFilenameArray[]
         {
@@ -123,11 +126,23 @@ string doCopy(int dataset, int destination, int Max_Threads)
         par.thisFilePath = thisFile;
         void *parV = &par;
 
-        thread t(copyThread,parV);
+        //thread t(copyThread,parV);
+        thread *t = new thread(copyThread, parV);
         numActiveThreads++;
+        threadList.push_back(t);
         //t.join();
-        t.detach();
+        //t.detach();
         //dst << src.rdbuf();
+    }
+
+    for(list<thread *>::iterator i = threadList.begin(); i != threadList.end(); ++ i)
+    {
+        thread * t = *i;
+        if(t->joinable())
+        {
+            t->join();
+            delete t;
+        }
     }
 
     cout << endl;

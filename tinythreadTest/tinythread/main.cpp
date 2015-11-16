@@ -13,6 +13,23 @@ int threadsLeft;
 
 void testThread(void *aArg)
 {
+    int next,first,second = 0;
+
+    for(int i = 0; i < 1000000; i++)
+    {
+        //Calc first 1000 fibonacci series
+        if(i <= 1)
+        {
+            next = i;
+        }
+        else
+        {
+            next = first + second;
+            first = second;
+            second = next;
+        }
+    }
+
     //string *intPtr = static_cast<string*>(aArg);
     int *intPtr = static_cast<int*>(aArg);
     cout << "I am a thread, my name is " << *intPtr << endl;
