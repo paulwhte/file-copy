@@ -31,7 +31,7 @@ int main()
             &dwBytesReturned,
             NULL);
 
-    cout << "input VCN: " << inputVcn << endl;
-    cout << "rpBuf: " << rpBuf << endl;
+    cout << "input VCN: " << &inputVcn << endl;
+    cout << "rpBuf: " << &rpBuf << endl;
     cout << "dwBytesReturned: " << dwBytesReturned << endl;
 }
