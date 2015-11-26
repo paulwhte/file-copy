@@ -107,6 +107,7 @@ def process_copy(datasetBasePath, destPath, filePathTextFile, lock):
         print("Some error occurred")
         exit()
 
+#Pooled threads one core
 def pooled_threaded_copy(datasetBasePath, destPath, filePathTextFile, lock):
     try:
         #Ask how many threads
@@ -137,6 +138,7 @@ def pooled_threaded_copy(datasetBasePath, destPath, filePathTextFile, lock):
         print("Some error occurred")
         exit()
 
+#Pooled processes multiple cores
 def pooled_process_copy(datasetBasePath, destPath, filePathTextFile, lock):
     try:
         #Ask how many threads
@@ -165,6 +167,50 @@ def pooled_process_copy(datasetBasePath, destPath, filePathTextFile, lock):
         return end - start
     except:
         print("Some error occurred")
+        exit()
+
+#Buffered stream copy
+def buffered_stream_copy(datasetBasePath, destPath, filePathTextFile, lock):
+    try:
+        #Ask how many threads
+        numThreads = int(input("How many threads? "))
+
+        #Get start time
+        start = datetime.datetime.now()
+
+        filenameArray = []
+
+        #Open the file, save filenames to array
+        with open(filePathTextFile) as file:
+            for line in file:
+                fullFilePath = datasetBasePath + "/" + line
+                fullFilePath = "\n".join(fullFilePath.split())
+                filenameArray.append(fullFilePath)
+
+        for filePath in filenameArray:
+            #Open the source file
+            #sourceFileObj = open(filePath, 'r')
+            #Open the destination file
+            fileBasename = os.path.basename(filePath)
+            destFilePath = destPath + "/" + fileBasename
+            #print(destFilePath)
+            #destFileObj = open(destFilePath, 'w+')
+            #destFileObj.write(sourceFileObj)
+
+            #Open the source file and read it into the destination file
+            #with open(filePath, 'r') as sourceFileObj, open(destFilePath, 'w+') as destFileObj:
+                #for line in sourceFileObj:
+                    #destFileObj.write(line)
+            
+            #Close the destination file
+            #destFileObj.close()
+    
+        #Get end time
+        end = datetime.datetime.now()
+        #Return total time
+        return end - start
+    except OSError as e:
+        print("Some error occurred %s" % e)
         exit()
 
 
@@ -233,7 +279,8 @@ if __name__ == '__main__':
     # 3. Processes
     # 4. Pooled threads
     # 5. Pooled process
-    copyType = int(input("What type of copy do you want to do? \n 1. Non-threaded \n 2. Threads \n 3. Processes (use multiple cores) \n 4. Pooled threads \n 5. Pooled processes \n"))
+    # 6. Buffered stream (no threading, load whole files into buffer)
+    copyType = int(input("What type of copy do you want to do? \n 1. Non-threaded \n 2. Threads \n 3. Processes (use multiple cores) \n 4. Pooled threads \n 5. Pooled processes \n 6. Buffered Stream (no thread, whole file) \n"))
     if copyType == 1:
         timeTaken = non_threaded_copy(datasetBasePath, destPath, filePathTextFile, lock)
         
@@ -248,7 +295,10 @@ if __name__ == '__main__':
 
     elif copyType == 5:
         timeTaken = pooled_process_copy(datasetBasePath, destPath, filePathTextFile, lock)
-    
+
+    elif copyType == 6:
+        timeTaken = buffered_stream_copy(datasetBasePath, destPath, filePathTextFile, lock)
+        
     else:
         print("Error")
         exit()
