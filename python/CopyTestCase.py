@@ -16,9 +16,10 @@ class CopyTestCase:
     def beginCopy(self):
         print("Begin copy")
         #Get the text file for the names of all the files in the dataset
-        self.method(self.dataset, self.
+        
 
-        return datetime.datetime.now()
+        #return datetime.datetime.now()
+        
     #End begin copy
 
     #This should return all the relevant data about this object once it's done with the copy
@@ -28,7 +29,7 @@ class CopyTestCase:
     #End reportData
 
     #Clear the directory after the copy is done
-    def clearDirectory(self, path)
+    def clearDirectory(self, path):
         try:
             shutil.rmtree( path )
             if not os.path.exists(path):
