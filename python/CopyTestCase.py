@@ -14,6 +14,7 @@ class CopyTestCase:
         self.indivFileCopyTimes = []
         self.numThreads = _numThreads
         self.bufferSize = _bufferSize
+        self.exceptionsRaised = []
 
     #Run self.method, which will be non_threaded_copy, threaded_copy, process_copy,
     #    pooled_thread_copy, pooled_process_copy, or buffered_stream_copy
@@ -46,6 +47,7 @@ class CopyTestCase:
             shutil.copy(filePath, dest)
         except shutil.Error as e:
             print ("Error: %s, unable to copy file %s" % (e, filePath))
+            self.exceptionsRaised.append("Error: %s, unable to copy file %s" % (e, filePath))
     #end copy_file definition
 
     #This should return all the relevant data about this object once it's done with the copy
@@ -62,6 +64,7 @@ class CopyTestCase:
                 os.makedirs(path)
         except shutil.Error as e:
             print("Error: %s, unable to delete files from directory %s" % (e, path))
+            self.exceptionsRaised.append("Error: %s, unable to delete files from directory %s" % (e, path))
     #End clearDirectory
 
     #Non threaded file copy, need datasetBasePath, destPath, and file to open
@@ -78,7 +81,7 @@ class CopyTestCase:
                     fullFilePath = "\n".join(fullFilePath.split())
                     #print("filepath: %s, destpath: %s" % (fullFilePath, destPath))
                     #singleFileStart = datetime.datetime.now()
-                    self.copy_file(fullFilePath, destPath)
+                    copy_file(fullFilePath, destPath)
                     #singleFileEnd = datetime.datetime.now()
                     #Build the info on the time this single file took to copy and append it to the list
                     #singleFileCopyTime = (fullFilePath, singleFileStart, singleFileEnd)
@@ -87,9 +90,11 @@ class CopyTestCase:
             end = datetime.datetime.now()
             #Return total time
             return end - start
-        except:
-            print("Some error occurred: non_threaded_copy")
-            exit()
+        except Exception as e:
+            #catch and log error
+            print("Some error occurred in non_threaded_copy: %s" % e)
+            self.exceptionsRaised.append("Some error occurred in non_threaded_copy: %s" % e)
+            #exit()
     #End non threaded copy
 
     #Threaded file copy, need datasetBasePath, destPath, and file to open
@@ -120,9 +125,10 @@ class CopyTestCase:
             end = datetime.datetime.now()
             #Return total time
             return end - start
-        except:
-            print("Some error occurred: threaded_copy")
-            exit()
+        except Exception as e:
+            print("Some error occurred in threaded_copy: %s" % e)
+            self.exceptionsRaised.append("Some error occurred in threaded_copy: %s" % e)
+            #exit()
     #End threaded copy
 
     #Process copy, should use more than one core
@@ -151,9 +157,10 @@ class CopyTestCase:
             end = datetime.datetime.now()
             #Return total time
             return end - start
-        except:
-            print("Some error occurred: process_copy")
-            exit()
+        except Exception as e:
+            print("Some error occurred in process_copy: %s" % e)
+            self.exceptionsRaised.append("Some error occurred in process_copy: %s" % e)
+            #exit()
     #End process copy
 
     #Pooled threads one core
@@ -183,9 +190,10 @@ class CopyTestCase:
             end = datetime.datetime.now()
             #Return total time
             return end - start
-        except:
-            print("Some error occurred: pooled_threaded_copy")
-            exit()
+        except Exception as e:
+            print("Some error occurred in pooled_threaded_copy: %s" % e)
+            self.exceptionsRaised.append("Some error occurred in pooled_threaded_copy: %s" % e)
+            #exit()
     #End pooled threaded copy
 
     #Pooled processes multiple cores
@@ -215,9 +223,10 @@ class CopyTestCase:
             end = datetime.datetime.now()
             #Return total time
             return end - start
-        except:
-            print("Some error occurred: pooled_process_copy")
-            exit()
+        except Exception as e:
+            print("Some error occurred in pooled_process_copy: %s" % e)
+            self.exceptionsRaised.append("Some error occurred in pooled_process_copy: %s" % e)
+            #exit()
     #End pooled process copy
 
     #Buffered stream copy
@@ -243,6 +252,7 @@ class CopyTestCase:
             end = datetime.datetime.now()
             #Return total time
             return end - start
-        except:
-            print("Some error occurred: buffered_stream_copy")
-            exit()
+        except Exception as e:
+            print("Some error occurred in buffered_stream_copy: %s" % e)
+            self.exceptionsRaised.append("Some error occurred in buffered_stream_copy: %s" % e)
+            #exit()

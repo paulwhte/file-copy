@@ -30,9 +30,10 @@ class CopyUtility:
         self.beginAllTests()
 
     def beginAllTests(self):
-        self.printOutAllTestCases()
+        
+        self.runAllTestCases()
 
-    def printOutAllTestCases(self):
+    def runAllTestCases(self):
         totalNumberCases = 0
         
         for case in self.caseList:
@@ -53,7 +54,7 @@ class CopyUtility:
                         newCase = CopyTestCase.CopyTestCase(thisSource, thisDestination, "ass", thisMethod, numThreads, 0)
                         #Begin copy, it will return the total time
                         thisTime = newCase.beginCopy()
-                        self.testCaseObjects.append(thisTime)
+                        self.testCaseObjects.append(newCase)
                 else:
                     totalNumberCases += 1
                     print("%d. Source: %s, Dest: %s, Method: %s, Threads: N/A" % (totalNumberCases, thisSource, thisDestination, thisMethod))
@@ -61,19 +62,37 @@ class CopyUtility:
                     newCase = CopyTestCase.CopyTestCase(thisSource, thisDestination, "ass", thisMethod, 0, 0)
                     #Begin copy, it will return the total time
                     thisTime = newCase.beginCopy()
-                    self.testCaseObjects.append(thisTime)
+                    self.testCaseObjects.append(newCase)
 
+        self.outputAllDataOnceDone()
     #End print out all test cases
 
     def outputAllDataOnceDone(self):
         #This is called at the very end of execution
-        for testCase in self.testCaseList:
+        caseNum = 1
             #This assumes that the data is ordered as such:
-            #   CopyTestCaseNum:int,Dataset:string,Origin:string,Destination:string,Time(seconds):datetime,IndividualTimes(microseconds):[(filename:string,time:datetime)...]
+            #   CopyTestCaseNum:int,Dataset:string,Method:string,Origin:string,Destination:string,NumThreads:int,Time(seconds):datetime,     IndividualTimes(microseconds):[(filename:string,time:datetime)...]
             #       No labels will be output (might output one file with labels)
             #       Semicolon will delimit individual test cases
             #       Comma will delimit different pieces of data in a test case
-            print("butts")
+        with open("E:/CAPSTONE_PROJECT/output/No_Label_Output_File_%s.txt" % datetime.datetime.now().strftime("%m-%d-%y-%H-%M-%f"), "w") as noLabelOutputFile:
+            with open("E:/CAPSTONE_PROJECT/output/Label_Output_File_%s.txt" % datetime.datetime.now().strftime("%m-%d-%y-%H-%M-%f"), "w") as labelOutputFile:
+                for testCase in self.testCaseList:
+                    exceptionString = ""
+                    for ex in testCase.exceptionsRaised:
+                        exceptionString += ex + "-"
+                    #Output to both files
+                    labeledLineString = "CopyTestCaseNum:%d,Dataset:%s,Method:%s,Origin:%s,Destination:%s,NumThreads:%d,Time(seconds):%s,Exceptions:%s \n" % (caseNum, testCase.dataset,testCase.Method,testCase.origin,testCase.destination,testCase.numThreads,testCase.totalCopyTime,exceptionString)
+                    unlabeledLineString = "%d,%s,%s,%s,%s,%d,%s,%s \n" % (caseNum, testCase.dataset,testCase.Method,testCase.origin,testCase.destination,testCase.numThreads,testCase.totalCopyTime,exceptionString)
+                    noLabelOutputFile.write(unlabeledLineString)
+                    labelOutputFile.write(labeledLineString)
+                    
+                    caseNum += 1
+
+        noLabelOutputFile.close()
+        labelOutputFile.close()
+        print("Output is written in E:/CAPSTONE_PROJECT/output")
+        print("Done...")
 
 if __name__ == '__main__':
     ass = CopyUtility()
