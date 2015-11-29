@@ -3,7 +3,7 @@ import CopyTestCase
 class CopyUtility:
     def __init__(self):
         #This will hold all output data 
-        self.testCaseList = []
+        self.testCaseObjects = []
         self.sourceList = ['C:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F1',
                            'C:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F2',
                            'C:/CAPSTONE_PROJECT/CAPSTONE_DATASETS/F3',
@@ -45,15 +45,25 @@ class CopyUtility:
             for method in self.methodList:
                 thisMethod = method
                 #Skip if the method is non_threaded_copy
-                if(not(thisMethod == 'non_threaded_copy')):
+                if(not(thisMethod == 'non_threaded_copy') and not (thisMethod == 'threaded_copy') and not (thisMethod == 'process_copy')):
                     for numThreads in self.numThreadsList:
                         totalNumberCases += 1
                         print("%d. Source: %s, Dest: %s, Method: %s, Threads: %d" % (totalNumberCases, thisSource, thisDestination, thisMethod, numThreads))
+                        #Create test case
+                        newCase = CopyTestCase.CopyTestCase(thisSource, thisDestination, "ass", thisMethod, numThreads, 0)
+                        #Begin copy, it will return the total time
+                        thisTime = newCase.beginCopy()
+                        self.testCaseObjects.append(thisTime)
                 else:
                     totalNumberCases += 1
                     print("%d. Source: %s, Dest: %s, Method: %s, Threads: N/A" % (totalNumberCases, thisSource, thisDestination, thisMethod))
-                        
-        
+                    #Create test case
+                    newCase = CopyTestCase.CopyTestCase(thisSource, thisDestination, "ass", thisMethod, 0, 0)
+                    #Begin copy, it will return the total time
+                    thisTime = newCase.beginCopy()
+                    self.testCaseObjects.append(thisTime)
+
+    #End print out all test cases
 
     def outputAllDataOnceDone(self):
         #This is called at the very end of execution

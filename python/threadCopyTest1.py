@@ -26,6 +26,7 @@ def clear_Dir( path ):
 
 #Non threaded file copy, need datasetBasePath, destPath, and file to open
 def non_threaded_copy(datasetBasePath, destPath, filePathTextFile, lock):
+    input("%s %s %s" %(datasetBasePath, destPath, filePathTextFile))
     #Get start time
     start = datetime.datetime.now()
     
