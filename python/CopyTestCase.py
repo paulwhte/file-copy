@@ -66,7 +66,7 @@ class CopyTestCase:
 
     #Non threaded file copy, need datasetBasePath, destPath, and file to open
     def non_threaded_copy(self, datasetBasePath, destPath, filePathTextFile, numThreads):
-        print("%s %s %s %d" %(datasetBasePath, destPath, filePathTextFile, numThreads))
+        #print("%s %s %s %d" %(datasetBasePath, destPath, filePathTextFile, numThreads))
         #Get start time
         start = datetime.datetime.now()
         
@@ -76,9 +76,9 @@ class CopyTestCase:
                     #print("file: %s" % line)
                     fullFilePath = datasetBasePath + "/" + line
                     fullFilePath = "\n".join(fullFilePath.split())
-                    print("filepath: %s, destpath: %s" % (fullFilePath, destPath))
+                    #print("filepath: %s, destpath: %s" % (fullFilePath, destPath))
                     #singleFileStart = datetime.datetime.now()
-                    copy_file(fullFilePath, destPath)
+                    self.copy_file(fullFilePath, destPath)
                     #singleFileEnd = datetime.datetime.now()
                     #Build the info on the time this single file took to copy and append it to the list
                     #singleFileCopyTime = (fullFilePath, singleFileStart, singleFileEnd)
@@ -108,7 +108,7 @@ class CopyTestCase:
                     #print("Starting copy on: %s" % (fullFilePath))
                     #Fire off thread
                     #thread_Array.append(_thread.start_new_thread(copy_file, (fullFilePath, destPath, lock)))
-                    thread = Thread(target=copy_file, args=(fullFilePath, destPath))
+                    thread = Thread(target=self.copy_file, args=(fullFilePath, destPath))
                     thread.start()
                     thread_Array.append(thread)
 
@@ -139,7 +139,7 @@ class CopyTestCase:
                     fullFilePath = datasetBasePath + "/" + line
                     fullFilePath = "\n".join(fullFilePath.split())
                     #Fire off process
-                    thread = Process(target=copy_file, args=(fullFilePath, destPath))
+                    thread = Process(target=self.copy_file, args=(fullFilePath, destPath))
                     thread.start()
                     thread_Array.append(thread)
 
@@ -176,7 +176,7 @@ class CopyTestCase:
 
             with concurrent.futures.ThreadPoolExecutor(max_workers=numThreads) as executor:
                 for filePath in filenameArray:
-                    executor.submit(copy_file, (fullFilePath, destPath))
+                    executor.submit(self.copy_file, (fullFilePath, destPath))
 
         
             #Get end time
@@ -208,7 +208,7 @@ class CopyTestCase:
 
             with concurrent.futures.ProcessPoolExecutor(max_workers=numThreads) as executor:
                 for filePath in filenameArray:
-                    executor.submit(copy_file, (fullFilePath, destPath))
+                    executor.submit(self.copy_file, (fullFilePath, destPath))
 
         
             #Get end time
