@@ -3,6 +3,7 @@ from multiprocessing import Process
 import datetime
 import shutil
 import os.path
+import concurrent.futures
 
 class CopyTestCase:
     def __init__(self, _source, _destination, _dataset, _method, _numThreads, _bufferSize):
@@ -10,11 +11,13 @@ class CopyTestCase:
         self.destination = _destination
         self.dataset = _dataset
         self.method = _method
+        self.method2 = _method
         self.totalCopyTime = 0
         self.indivFileCopyTimes = []
         self.numThreads = _numThreads
         self.bufferSize = _bufferSize
         self.exceptionsRaised = []
+        self.thread_Array = []
 
     #Run self.method, which will be non_threaded_copy, threaded_copy, process_copy,
     #    pooled_thread_copy, pooled_process_copy, or buffered_stream_copy
@@ -37,7 +40,9 @@ class CopyTestCase:
             print("There was some error in the copy method")
         #Now pass everything into a copy operation method that will return the time it took to do all copying
         self.totalCopyTime = self.method(self.source, self.destination, filePathTextFile, self.numThreads)
-
+        #Clear the files
+        self.clearDirectory(self.destination)
+        
         return self.totalCopyTime
     #End begin copy
 
@@ -59,9 +64,13 @@ class CopyTestCase:
     #Clear the directory after the copy is done
     def clearDirectory(self, path):
         try:
-            shutil.rmtree(path)
-            if not os.path.exists(path):
-                os.makedirs(path)
+            print("Attempting to clear directory: %s" % path)
+            for file in os.listdir(path):
+                os.remove(path + "/" + file)
+            
+            #shutil.rmtree(path)
+            #if not os.path.exists(path):
+                #os.makedirs(path)
         except shutil.Error as e:
             print("Error: %s, unable to delete files from directory %s" % (e, path))
             self.exceptionsRaised.append("Error: %s, unable to delete files from directory %s" % (e, path))
@@ -81,7 +90,7 @@ class CopyTestCase:
                     fullFilePath = "\n".join(fullFilePath.split())
                     #print("filepath: %s, destpath: %s" % (fullFilePath, destPath))
                     #singleFileStart = datetime.datetime.now()
-                    copy_file(fullFilePath, destPath)
+                    self.copy_file(fullFilePath, destPath)
                     #singleFileEnd = datetime.datetime.now()
                     #Build the info on the time this single file took to copy and append it to the list
                     #singleFileCopyTime = (fullFilePath, singleFileStart, singleFileEnd)
@@ -115,10 +124,10 @@ class CopyTestCase:
                     #thread_Array.append(_thread.start_new_thread(copy_file, (fullFilePath, destPath, lock)))
                     thread = Thread(target=self.copy_file, args=(fullFilePath, destPath))
                     thread.start()
-                    thread_Array.append(thread)
+                    self.thread_Array.append(thread)
 
             #Join all threads
-            for thread in thread_Array:
+            for thread in self.thread_Array:
                 thread.join()
 
             #Get end time
@@ -147,10 +156,10 @@ class CopyTestCase:
                     #Fire off process
                     thread = Process(target=self.copy_file, args=(fullFilePath, destPath))
                     thread.start()
-                    thread_Array.append(thread)
+                    self.thread_Array.append(thread)
 
             #Join all threads
-            for thread in thread_Array:
+            for thread in self.thread_Array:
                 thread.join()
 
             #Get end time

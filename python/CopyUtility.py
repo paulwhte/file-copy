@@ -1,4 +1,5 @@
 import CopyTestCase
+import datetime
 
 class CopyUtility:
     def __init__(self):
@@ -54,6 +55,7 @@ class CopyUtility:
                         newCase = CopyTestCase.CopyTestCase(thisSource, thisDestination, "ass", thisMethod, numThreads, 0)
                         #Begin copy, it will return the total time
                         thisTime = newCase.beginCopy()
+                        print("Copy time: %s" % thisTime)
                         self.testCaseObjects.append(newCase)
                 else:
                     totalNumberCases += 1
@@ -62,6 +64,7 @@ class CopyUtility:
                     newCase = CopyTestCase.CopyTestCase(thisSource, thisDestination, "ass", thisMethod, 0, 0)
                     #Begin copy, it will return the total time
                     thisTime = newCase.beginCopy()
+                    print("Copy time: %s" % thisTime)
                     self.testCaseObjects.append(newCase)
 
         self.outputAllDataOnceDone()
@@ -77,13 +80,13 @@ class CopyUtility:
             #       Comma will delimit different pieces of data in a test case
         with open("E:/CAPSTONE_PROJECT/output/No_Label_Output_File_%s.txt" % datetime.datetime.now().strftime("%m-%d-%y-%H-%M-%f"), "w") as noLabelOutputFile:
             with open("E:/CAPSTONE_PROJECT/output/Label_Output_File_%s.txt" % datetime.datetime.now().strftime("%m-%d-%y-%H-%M-%f"), "w") as labelOutputFile:
-                for testCase in self.testCaseList:
+                for testCase in self.testCaseObjects:
                     exceptionString = ""
                     for ex in testCase.exceptionsRaised:
                         exceptionString += ex + "-"
                     #Output to both files
-                    labeledLineString = "CopyTestCaseNum:%d,Dataset:%s,Method:%s,Origin:%s,Destination:%s,NumThreads:%d,Time(seconds):%s,Exceptions:%s \n" % (caseNum, testCase.dataset,testCase.Method,testCase.origin,testCase.destination,testCase.numThreads,testCase.totalCopyTime,exceptionString)
-                    unlabeledLineString = "%d,%s,%s,%s,%s,%d,%s,%s \n" % (caseNum, testCase.dataset,testCase.Method,testCase.origin,testCase.destination,testCase.numThreads,testCase.totalCopyTime,exceptionString)
+                    labeledLineString = "CopyTestCaseNum:%d,Dataset:%s,Method:%s,Origin:%s,Destination:%s,NumThreads:%d,Time(seconds):%s,Exceptions:%s \n" % (caseNum, testCase.dataset,testCase.method2,testCase.source,testCase.destination,testCase.numThreads,testCase.totalCopyTime,exceptionString)
+                    unlabeledLineString = "%d,%s,%s,%s,%s,%d,%s,%s \n" % (caseNum, testCase.dataset,testCase.method2,testCase.source,testCase.destination,testCase.numThreads,testCase.totalCopyTime,exceptionString)
                     noLabelOutputFile.write(unlabeledLineString)
                     labelOutputFile.write(labeledLineString)
                     
